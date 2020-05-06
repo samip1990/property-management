@@ -11,8 +11,54 @@ PORT = os.getenv("PORT")
 
 payment_histories = []
 maintenance_requests = []
+unit_requests = []
+applicant_requests = []
 
-# ----------------------------- Maintenance Request  -----------------------------
+# ----------------------------- Application Processing -----------------------------
+
+@app.route("/application-request", methods=["POST"])
+def application_request():
+    body = request.json
+    applicant_requests.append(body)
+    print(type(body))
+    return json.dumps({"result": "success", "body": body})
+
+@app.route("/application-request/<id>", methods=["GET"])
+def get_application(id):
+    x = applicant_requests
+    print(x)
+    return json.dumps(applicant_requests[0])
+
+@app.route("/application-request/<id>", methods=["DELETE"])
+def delete_application(id):
+    x = applicant_requests
+    del applicant_requests[:]
+    print(x)
+    return json.dumps({"result": "DELETED", "RequestType": "APPLICANT", "userId": id})
+
+# ----------------------------- Unit Management        -----------------------------
+
+@app.route("/unit-request", methods=["POST"])
+def unit_request():
+    body = request.json
+    unit_requests.append(body)
+    print(type(body))
+    return json.dumps({"result": "success", "body": body})
+
+@app.route("/unit-request/<id>", methods=["GET"])
+def get_unit(id):
+    x = unit_requests
+    print(x)
+    return json.dumps(unit_requests[0])
+
+@app.route("/unit-request/<id>", methods=["DELETE"])
+def delete_unit(id):
+    x = unit_requests
+    del unit_requests[:]
+    print(x)
+    return json.dumps({"result": "DELETED", "RequestType": "UNIT", "unitNumber": id})
+
+# ----------------------------- Maintenance Request    -----------------------------
 
 @app.route("/maintenance-request", methods=["POST"])
 def maintenance_request():
@@ -29,7 +75,7 @@ def get_maintenance_request(id):
     print(x)
     return json.dumps(maintenance_requests[0])
 
-# ----------------------------- Payment Service      -----------------------------
+# ----------------------------- Payment Service        -----------------------------
 
 
 @app.route("/payment-processing", methods=["POST"])
