@@ -20,20 +20,17 @@ applicant_requests = []
 def application_request():
     body = request.json
     applicant_requests.append(body)
-    print(type(body))
     return json.dumps({"result": "success", "body": body})
 
 @app.route("/application-request/<id>", methods=["GET"])
 def get_application(id):
     x = applicant_requests
-    print(x)
     return json.dumps(applicant_requests[0])
 
 @app.route("/application-request/<id>", methods=["DELETE"])
 def delete_application(id):
     x = applicant_requests
     del applicant_requests[:]
-    print(x)
     return json.dumps({"result": "DELETED", "RequestType": "APPLICANT", "userId": id})
 
 # ----------------------------- Unit Management        -----------------------------
@@ -42,20 +39,17 @@ def delete_application(id):
 def unit_request():
     body = request.json
     unit_requests.append(body)
-    print(type(body))
     return json.dumps({"result": "success", "body": body})
 
 @app.route("/unit-request/<id>", methods=["GET"])
 def get_unit(id):
     x = unit_requests
-    print(x)
     return json.dumps(unit_requests[0])
 
 @app.route("/unit-request/<id>", methods=["DELETE"])
 def delete_unit(id):
     x = unit_requests
     del unit_requests[:]
-    print(x)
     return json.dumps({"result": "DELETED", "RequestType": "UNIT", "unitNumber": id})
 
 # ----------------------------- Maintenance Request    -----------------------------
@@ -66,13 +60,11 @@ def maintenance_request():
     body["requestId"] = str(uuid.uuid1())
 
     maintenance_requests.append(body)
-    print(type(body))
     return json.dumps({"result": "success", "body": body})
 
 @app.route("/maintenance-request/<id>", methods=["GET"])
 def get_maintenance_request(id):
     x = maintenance_requests
-    print(x)
     return json.dumps(maintenance_requests[0])
 
 # ----------------------------- Payment Service        -----------------------------
